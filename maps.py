@@ -21,7 +21,7 @@ def my_map():
                 markers=[(37.4419, -122.1419)] # hardcoded!
             )
     src = "https://maps.googleapis.com/maps/api/js?key=%s&callback=initMap" %API_KEY
-    return render_template('maps.html', mymap=mymap, src = src)
+    return render_template('map.html', mymap=mymap, src = src)
 
 if __name__ == "__main__":
     app.run(debug=True, use_reloader=True)
