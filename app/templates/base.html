@@ -1,19 +1,12 @@
 <html>
     <head>
-        {% if title %}
-        <title>{{ title }}</title>
-        {% else %}
         <title>Welcome to Chunkies!</title>
-        {% endif %}
     </head>
     {% if not current_user.is_anonymous %}
     <a href="{{ url_for('logout') }}">Logout</a>
     {% endif %}
     <body>
         <hr>
-        <ul>
-            
-        </ul>
         {% block content %}{% endblock %}
     </body>
 </html>
