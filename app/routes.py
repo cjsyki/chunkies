@@ -1,9 +1,9 @@
+import yelp
 import config_keys
 from app import app, db
 from app.models import User
-from flask_googlemaps import Map
-from flask_googlemaps import GoogleMaps
-from app.forms import LoginForm, RegistrationForm
+from flask_googlemaps import Map, GoogleMaps
+from app.forms import LoginForm, RegistrationForm, CoordinatesForm
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, login_required, logout_user
 
@@ -11,7 +11,8 @@ API_KEY = config_keys.MAPS
 
 GoogleMaps(app, key = API_KEY)
 
-@app.route('/map', methods=["GET"])
+# creates the map, utilizes api key, and returns template
+@app.route('/map', methods=['GET', 'POST'])
 @login_required
 def map():
     mymap = Map(
@@ -26,6 +27,7 @@ def map():
     src = "https://maps.googleapis.com/maps/api/js?key=%s&callback=initMap" %API_KEY
     return render_template('map.html', mymap=mymap, src=src)
 
+# login page
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
@@ -40,11 +42,13 @@ def login():
         return redirect(url_for('map'))
     return render_template('login.html', form=form)
 
+# logout page
 @app.route('/logout')
 def logout():
     logout_user()
     return redirect(url_for('map'))
 
+# registration page
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
@@ -58,6 +62,7 @@ def register():
         return redirect(url_for('login'))
     return render_template('register.html', form=form)
 
+# homepage/index
 @app.route('/index')
 @app.route('/')
 def index():

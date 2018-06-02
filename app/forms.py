@@ -1,14 +1,16 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, HiddenField
 from wtforms.validators import Length, ValidationError, Email, EqualTo, DataRequired
 from app.models import User
 
+# login form
 class LoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     remember_me = BooleanField('Remember Me')
     submit = SubmitField('Sign In')
 
+# registration form
 class RegistrationForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
@@ -19,7 +21,8 @@ class RegistrationForm(FlaskForm):
         if user is not None:
             raise ValidationError('Please use a different email address.')
 
-# class EditProfileForm(FlaskForm):
-#     username = StringField('Username', validators=[DataRequired()])
-#     about_me = TextAreaField('About me', validators=[Length(min=0, max=140)])
-#     submit = SubmitField('Submit')
+# coordinates form (stores coordinates for routes.py to retrieve)
+# not the best yet :(, working on it
+class CoordinatesForm(FlaskForm):
+    lat = HiddenField('lat')
+    lng = HiddenField('lng')
