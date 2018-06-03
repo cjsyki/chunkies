@@ -134,13 +134,13 @@ def query_api(term, location):
 
     return businesses
     
-    print(u'{0} businesses found, querying business info ' \
-        'for the top result "{1}" ...'.format(
-            len(businesses), business_id))
-    response = get_business(API_KEY, business_id)
+    # # print(u'{0} businesses found, querying business info ' \
+    # #     'for the top result "{1}" ...'.format(
+    # #         len(businesses), business_id))
+    # response = get_business(API_KEY, business_id)
 
-    print(u'Result for business "{0}" found:'.format(business_id))
-    pprint.pprint(response, indent=2)
+    # # print(u'Result for business "{0}" found:'.format(business_id))
+    # pprint.pprint(response, indent=2)
 
 
 def main():
