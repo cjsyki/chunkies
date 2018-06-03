@@ -17,8 +17,13 @@ def search():
     if form.validate_on_submit( ):
         zipcode = form.zipcode.data
         option = form.options.data
-        resultsDict = yelp.query_api(option, str(zipcode))
-        return resultsDict['name']
+        businessesDict = yelp.query_api(option, str(zipcode))
+        retString = ""
+        for i in range(0, len(businessesDict)):
+            business_id = businessesDict[i]['id']
+            restaurant = yelp.get_business(yelp.API_KEY, business_id)
+            retString += restaurant['name'] + "<br>"
+        return retString
         # return redirect(url_for('results'))
     return render_template("search.html", form=form)
 
