@@ -1,11 +1,8 @@
-<!doctype html>
-<html>
-    <title>Welcome to Chunkies!</title>
-<header style="padding:16px 16px">
-    <h1>Chunkies</h1>
-</header>
-<body>
-    <p>Have an account? <a href="{{ url_for('login') }}">Click to Login!</a></p>
-    <p>New User? <a href="{{ url_for('register') }}">Click to Register!</a></p>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block content %}
+
+<p>Have an account? <a href="{{ url_for('login') }}">Click to Login!</a></p>
+<p>New User? <a href="{{ url_for('register') }}">Click to Register!</a></p>
+
+{% endblock %}

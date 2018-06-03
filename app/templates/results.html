@@ -1,9 +1,6 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <head>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">
     <style>
       /* Always set the map height explicitly to define the size of the div
       * element that contains the map. */
@@ -18,9 +15,6 @@
         padding: 0;
       }
     </style>
-    <h1>Chunkies</h1><hr>
-  </head>
-  <body>
     <div id="map"></div>
     <script>
       // Note: This example requires that you consent to location sharing when
@@ -66,9 +60,7 @@
     <script async defer
     src="{{ src }}">
     </script>
-    <body>
         <div class="container">
             {{ mymap.html }}
         </div>
-    </body>
   {% endblock %}

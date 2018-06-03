@@ -12,6 +12,7 @@ API_KEY = config_keys.MAPS
 GoogleMaps(app, key = API_KEY)
 
 @app.route('/search', methods=["GET", "POST"])
+@login_required
 def search():
     form = SearchForm( )
     if form.validate_on_submit( ):
