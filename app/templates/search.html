@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form action="" method="post">
+    {{ form.hidden_tag( ) }}
+    enter your zip code below:
+    {{ form.zipcode(size=5) }}
+    {% for error in form.zipcode.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+    {% endfor %}<br>
+    choose what food you want:
+    {{ form.options }}
+    {{ form.submit() }}
+</form>
+{% endblock %}

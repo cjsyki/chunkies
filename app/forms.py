@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, HiddenField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, RadioField, IntegerField
 from wtforms.validators import Length, ValidationError, Email, EqualTo, DataRequired
 from app.models import User
 
@@ -23,6 +23,15 @@ class RegistrationForm(FlaskForm):
 
 # coordinates form (stores coordinates for routes.py to retrieve)
 # not the best yet :(, working on it
-class CoordinatesForm(FlaskForm):
-    lat = HiddenField('lat')
-    lng = HiddenField('lng')
+class SearchForm(FlaskForm):
+    zipcode = IntegerField('Zipcode', validators=[DataRequired()])
+    options = RadioField('Options', choices=[('breakfast', 'breakfast'), ('lunch','lunch'), ('dinner', 'dinner'), ('dessert', 'dessert')], \
+                validators=[DataRequired()])
+    submit = SubmitField('Click here to continue')
+    def validate_zipcode(self, zipcode):
+        try:
+            newZip = int(str(zipcode.data))
+            if newZip < 501 or newZip > 99950:
+                raise ValidationError('Please enter a valid zipcode')
+        except ValueError:
+            raise ValidationError('Please enter a valid zipcode')
