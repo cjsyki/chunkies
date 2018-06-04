@@ -1,5 +1,6 @@
 import yelp
 import config_keys
+import restaurantMethods
 from app import app, db
 from app.models import User
 from flask_googlemaps import Map, GoogleMaps
@@ -19,10 +20,17 @@ def search():
         zipcode = form.zipcode.data
         option = form.options.data
         businessesDict = yelp.query_api(option, str(zipcode))
+        randomDict = restaurantMethods.generateRandomList(businessesDict)
         retString = ""
         for i in range(0, len(businessesDict)):
             business_id = businessesDict[i]['id']
+            newBusiness_id = randomDict[i]['id']
+            print(business_id)
+            print("============================================")
+            print(newBusiness_id)
             restaurant = yelp.get_business(yelp.API_KEY, business_id)
+            newRestaurant = yelp.get_business(yelp.API_KEY, newBusiness_id)
+            # print(restaurant['name'] + " |||||||||||||| " + newRestaurant['name'] + "\n")
             retString += restaurant['name'] + "<br>"
         return retString
         # return redirect(url_for('results'))
