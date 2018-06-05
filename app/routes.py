@@ -27,15 +27,9 @@ def search():
             business_id = businessesDict[i]['id']
             print(business_id)
             business_id_array.append(business_id)
-        original = business_id_array.copy()
         random.shuffle(business_id_array)
-        print(original)
-        print(business_id_array)
-        for i in range(0, len(original)):
-            print("============================================")
-            restaurant = yelp.get_business(yelp.API_KEY, original[i])
-            other = yelp.get_business(yelp.API_KEY, business_id_array[i])
-            # print(restaurant['name'] + " |||||||||||||| " + other['name'] + "\n")
+        for i in range(0, len(business_id_array)):
+            restaurant = yelp.get_business(yelp.API_KEY, business_id_array[i])
             retString += restaurant['name'] + "<br>"
         return retString
         # return redirect(url_for('results'))
