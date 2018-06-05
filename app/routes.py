@@ -1,4 +1,5 @@
 import yelp
+import random
 import config_keys
 import restaurantMethods
 from app import app, db
@@ -20,17 +21,21 @@ def search():
         zipcode = form.zipcode.data
         option = form.options.data
         businessesDict = yelp.query_api(option, str(zipcode))
-        randomDict = restaurantMethods.generateRandomList(businessesDict)
+        business_id_array = []
         retString = ""
         for i in range(0, len(businessesDict)):
             business_id = businessesDict[i]['id']
-            newBusiness_id = randomDict[i]['id']
             print(business_id)
+            business_id_array.append(business_id)
+        original = business_id_array.copy()
+        random.shuffle(business_id_array)
+        print(original)
+        print(business_id_array)
+        for i in range(0, len(original)):
             print("============================================")
-            print(newBusiness_id)
-            restaurant = yelp.get_business(yelp.API_KEY, business_id)
-            newRestaurant = yelp.get_business(yelp.API_KEY, newBusiness_id)
-            # print(restaurant['name'] + " |||||||||||||| " + newRestaurant['name'] + "\n")
+            restaurant = yelp.get_business(yelp.API_KEY, original[i])
+            other = yelp.get_business(yelp.API_KEY, business_id_array[i])
+            # print(restaurant['name'] + " |||||||||||||| " + other['name'] + "\n")
             retString += restaurant['name'] + "<br>"
         return retString
         # return redirect(url_for('results'))
