@@ -25,12 +25,11 @@ def search():
         retString = ""
         for i in range(0, len(businessesDict)):
             business_id = businessesDict[i]['id']
-            print(business_id)
             business_id_array.append(business_id)
-        random.shuffle(business_id_array)
-        for i in range(0, len(business_id_array)):
+            random.shuffle(business_id_array)
             restaurant = yelp.get_business(yelp.API_KEY, business_id_array[i])
-            retString += restaurant['name'] + "<br>"
+            retString += restaurantMethods.returnName(restaurant) + "<br>"
+            print(restaurant)
         return retString
         # return redirect(url_for('results'))
     return render_template("search.html", form=form)
