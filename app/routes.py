@@ -90,4 +90,6 @@ def register():
 @app.route('/index')
 @app.route('/')
 def index():
+    if current_user.is_authenticated:
+        return redirect(url_for('search'))
     return render_template('index.html')

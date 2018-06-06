@@ -1,11 +1,13 @@
 <!doctype html>
 <html>
     <head>
+        <link type="text/css" rel="stylesheet" href="styles.css">
         <title>Welcome to Chunkies!</title>
         {% if not current_user.is_anonymous %}
         <a href="{{ url_for('logout') }}">Logout</a>
         {% endif %}
-        <header style="padding:16px 16px">
+        <header>
+            <h5>Welcome to</h5>
             <h1>Chunkies</h1>
         </header>
     </head>
