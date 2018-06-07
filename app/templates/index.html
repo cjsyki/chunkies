@@ -1,8 +1,19 @@
-{% extends "base.html" %}
+<!doctype html>
+<html>
+    <head>
+        <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
+        <link type="text/javascript" rel="stylesheet" href="{{ url_for('static', filename='js/index.js') }}">
+        <title>Welcome to Chunkies!</title>
 
-{% block content %}
 
-<p>Have an account? <a href="{{ url_for('login') }}">Click to Login!</a></p>
-<p>New User? <a href="{{ url_for('register') }}">Click to Register!</a></p>
-
-{% endblock %}
+        <header id="head">
+            <h3>Welcome to</h3>
+            <h1>Chunkies</h1>
+        </header>
+    </head>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <body>
+        <p>Have an account? <a href="{{ url_for('login') }}">Click to Login!</a></p>
+        <p>New User? <a href="{{ url_for('register') }}">Click to Register!</a></p>
+    </body>
+</html>
