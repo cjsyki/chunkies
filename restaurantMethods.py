@@ -4,7 +4,7 @@ def returnName(dictionary):
 
 #returns coordinates array
 def returnCoordinates(dictionary):
-    return [dictionary["coordinates"]["latitude"], dictionary["coordinates"]["longitude"]]
+    return [float(dictionary["coordinates"]["latitude"]), float(dictionary["coordinates"]["longitude"])]
 
 #returns address
 def returnAddress(dictionary):

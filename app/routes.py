@@ -26,30 +26,36 @@ def search():
         for i in range(0, len(businessesDict)):
             business_id = businessesDict[i]['id']
             business_id_array.append(business_id)
-            random.shuffle(business_id_array)
-            restaurant = yelp.get_business(yelp.API_KEY, business_id_array[i])
-            retString += restaurantMethods.returnName(restaurant) + "<br>"
-            print(restaurant)
-        return retString
+        random.shuffle(business_id_array)
+        print(business_id_array)
+        return redirect(url_for("results",array=business_id_array))
         # return redirect(url_for('results'))
     return render_template("search.html", form=form)
 
 # creates the map, utilizes api key, and returns template
-@app.route('/results', methods=['GET', 'POST'])
+@app.route('/results/<array>', methods=['GET', 'POST'])
 @login_required
-def results():
+def results(array):
     # return yelp.
+    # for i in range(0,len(array)):
+    print(array)
+    print(array[0:10])
+    restaurant = yelp.get_business(yelp.API_KEY, array[2])
+    print(restaurant)
+    coordinates = restaurantMethods.returnCoordinates(restaurant)
+    lat = coordinates[0]
+    lng = coordinates[1]
     mymap = Map(
                 identifier="view-side",
                 varname="mymap",
                 style="height:720px;width:1100px;margin:0;", # hardcoded!
-                lat=37.4419, # hardcoded!
-                lng=-122.1419, # hardcoded!
+                lat=coordinates[0],
+                lng=coordinates[1],
                 zoom=15,
                 markers=[(37.4419, -122.1419)] # hardcoded!
             )
     src = "https://maps.googleapis.com/maps/api/js?key=%s&callback=initMap" %API_KEY
-    return render_template('results.html', mymap=mymap, src=src)
+    return render_template('results.html', mymap=mymap, src=src, lat=lat, lng=lng)
 
 # login page
 @app.route('/login', methods=['GET', 'POST'])
