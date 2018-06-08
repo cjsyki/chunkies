@@ -5,12 +5,11 @@ import restaurantMethods
 from app import app, db
 from app.models import User
 from flask_googlemaps import Map, GoogleMaps
-from app.forms import LoginForm, RegistrationForm, SearchForm
+from app.forms import LoginForm, RegistrationForm, SearchForm, ResultsForm
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, login_required, logout_user
 
 API_KEY = config_keys.MAPS
-
 GoogleMaps(app, key = API_KEY)
 
 @app.route('/search', methods=["GET", "POST"])
@@ -21,6 +20,7 @@ def search():
         zipcode = form.zipcode.data
         option = form.options.data
         businessesDict = yelp.query_api(option, str(zipcode))
+        global business_id_array
         business_id_array = []
         retString = ""
         for i in range(0, len(businessesDict)):
@@ -28,34 +28,34 @@ def search():
             business_id_array.append(business_id)
         random.shuffle(business_id_array)
         print(business_id_array)
-        return redirect(url_for("results",array=business_id_array))
+        return pickRestaurant()
         # return redirect(url_for('results'))
     return render_template("search.html", form=form)
 
+business_id_array = []
+current_id_pos = 0
+def pickRestaurant():
+    global current_id_pos
+    business_id = business_id_array[current_id_pos]
+    current_id_pos += 1
+    print(current_id_pos)
+    return redirect(url_for("results", id = business_id))
+
 # creates the map, utilizes api key, and returns template
-@app.route('/results/<array>', methods=['GET', 'POST'])
+@app.route('/results/<id>', methods=['GET', 'POST'])
 @login_required
-def results(array):
-    # return yelp.
-    # for i in range(0,len(array)):
-    print(array)
-    print(array[0:10])
-    restaurant = yelp.get_business(yelp.API_KEY, array[2])
+def results(id):
+    restaurant = yelp.get_business(yelp.API_KEY, id)
     print(restaurant)
     coordinates = restaurantMethods.returnCoordinates(restaurant)
     lat = coordinates[0]
     lng = coordinates[1]
-    mymap = Map(
-                identifier="view-side",
-                varname="mymap",
-                style="height:720px;width:1100px;margin:0;", # hardcoded!
-                lat=coordinates[0],
-                lng=coordinates[1],
-                zoom=15,
-                markers=[(37.4419, -122.1419)] # hardcoded!
-            )
+    print(lat, lng)
     src = "https://maps.googleapis.com/maps/api/js?key=%s&callback=initMap" %API_KEY
-    return render_template('results.html', mymap=mymap, src=src, lat=lat, lng=lng)
+    form = ResultsForm()
+    if form.is_submitted():
+        return pickRestaurant()
+    return render_template('results.html', form=form, src=src, lat=lat, lng=lng)
 
 # login page
 @app.route('/login', methods=['GET', 'POST'])
