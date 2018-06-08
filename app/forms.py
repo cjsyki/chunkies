@@ -28,6 +28,9 @@ class SearchForm(FlaskForm):
     options = RadioField('Options', choices=[('breakfast', 'breakfast'), ('lunch','lunch'), ('dinner', 'dinner'), ('dessert', 'dessert')], \
                 validators=[DataRequired()])
     submit = SubmitField('Click here to continue')
+    # function that validates zip codes by 
+    # checking if they are a number bw 501 and 99950
+    # (lowest and highest numbers)
     def validate_zipcode(self, zipcode):
         try:
             newZip = int(str(zipcode.data))
