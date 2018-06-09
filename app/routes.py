@@ -57,6 +57,8 @@ def pickRestaurant():
 @app.route('/results/<id>', methods=['GET', 'POST'])
 @login_required
 def results(id):
+    if current_id_pos == 0:
+        return redirect(url_for('search'))
     # given id, get corresponding restaurant to id
     restaurant = yelp.get_business(yelp.API_KEY, id)
     print(restaurant)
