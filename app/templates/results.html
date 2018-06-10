@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
+We recommend: {{ restaurant["name"] }}<br>
+Rating: {{ restaurant["rating"] }}<br>
+Price: {{ restaurant["price"] }}<br>
+Coordinates: {{ lat }} and {{ lng }}
 <link rel="stylesheet" href="/maps/documentation/javascript/cgc/demos.css">
     <style>
        /* Always set the map height explicitly to define the size of the div
@@ -15,13 +19,15 @@
         padding: 0;
       }
     </style>
-    <meta id="my-data" data-name="{{ lat }}" data-other="{{ lng }}">
+    <meta id="my-data" lat="{{ lat }}" lng="{{ lng }}">
     <div id="map"></div>
     <script>
       var map;
+      var latitude = parseFloat(document.head.querySelector("[id=my-data]").lat);
+      var longitude = parseFloat(document.head.querySelector("[id=my-data]").lng);
       function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: "{{ lat }}", lng: "{{ lng }}"},
+          center: {lat: latitude, lng: longitude},
           zoom: 8
         });
       }

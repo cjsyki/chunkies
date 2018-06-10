@@ -47,6 +47,10 @@ def pickRestaurant():
     # use it as index of global array to grab a single id
     # and increment global var
     global current_id_pos
+    global business_id_array
+    if current_id_pos + 1 == len(business_id_array):
+        random.shuffle(business_id_array)
+        current_id_pos = 0
     business_id = business_id_array[current_id_pos]
     current_id_pos += 1
     print(current_id_pos)
@@ -75,7 +79,7 @@ def results(id):
     if form.is_submitted():
         return pickRestaurant()
     # else return html
-    return render_template('results.html', form=form, src=src, lat=lat, lng=lng)
+    return render_template('results.html', restaurant=restaurant, form=form, src=src, lat=lat, lng=lng)
 
 # login page
 @app.route('/login', methods=['GET', 'POST'])
