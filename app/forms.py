@@ -39,5 +39,6 @@ class SearchForm(FlaskForm):
         except ValueError:
             raise ValidationError('Please enter a valid zipcode')
 
+# submission field
 class ResultsForm(FlaskForm):
     submit = SubmitField('Click here to go to the next restaurant')
